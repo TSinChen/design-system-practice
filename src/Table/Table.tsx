@@ -1,5 +1,5 @@
 const Table = () => {
-  return <div>test</div>;
+  return <div className="text-3xl">test</div>;
 };
 
 export { Table };
