@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Table } from "./Table";
+import { MOCK_DATA } from "./Table.mocks";
+import { useState } from "react";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -22,5 +24,50 @@ type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
-  args: {},
+  name: "基本用法",
+  args: {
+    ...MOCK_DATA,
+  },
+};
+
+export const Many: Story = {
+  name: "多筆資料",
+  args: {
+    columns: Array.from({ length: 30 }, (_, index) => ({
+      name: `column${index + 1}`,
+      title: `Column ${index + 1}`,
+    })),
+    rows: Array.from({ length: 30 }, (_, rowIndex) => ({
+      id: rowIndex + 1,
+      ...Object.fromEntries(
+        Array.from({ length: 30 }, (_, columnIndex) => [
+          `column${columnIndex + 1}`,
+          `column${columnIndex + 1}`,
+        ])
+      ),
+    })),
+  },
+};
+
+export const SortByServer: Story = {
+  name: "後端排序",
+  args: {
+    ...MOCK_DATA,
+  },
+  render: (args) => {
+    const [isFetching, setIsFetching] = useState(false);
+    return (
+      <Table
+        {...args}
+        isFetching={isFetching}
+        isSortByServer
+        onSort={() => {
+          setIsFetching(true);
+          setTimeout(() => {
+            setIsFetching(false);
+          }, 1000);
+        }}
+      />
+    );
+  },
 };
