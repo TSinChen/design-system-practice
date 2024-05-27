@@ -14,9 +14,37 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {},
+  argTypes: {
+    columns: {
+      description:
+        "欄位資訊，需包含 name 和 title，title 為顯示名稱、name 對應到 rows 中 object 的 key。",
+    },
+    rows: {
+      description: "資料，每筆資料需包含 id，且與 columns 中的 name 對應。",
+    },
+    hover: {
+      description: "是否啟用 hover 效果",
+    },
+    isFirstColumnFixed: {
+      description: "是否固定第一欄",
+    },
+    isLastColumnFixed: {
+      description: "是否固定最後一欄",
+    },
+    isFetching: {
+      description: "是否正在取得資料",
+    },
+    onSort: {
+      description: "排序事件，需回傳欄位名稱和排序方式",
+    },
+  },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: {},
+  args: {
+    hover: false,
+    isFirstColumnFixed: false,
+    isLastColumnFixed: false,
+    isFetching: false,
+  },
 } satisfies Meta<typeof Table>;
 
 export default meta;
@@ -42,6 +70,9 @@ export const Many: Story = {
   name: "多筆資料",
   args: {
     ...MOCK_MASSIVE_DATA,
+  },
+  parameters: {
+    layout: "fullscreen",
   },
 };
 
@@ -73,5 +104,8 @@ export const FixedColumns: Story = {
     ...MOCK_MASSIVE_DATA,
     isFirstColumnFixed: true,
     isLastColumnFixed: true,
+  },
+  parameters: {
+    layout: "fullscreen",
   },
 };
