@@ -23,7 +23,9 @@ export enum SortType {
 export type TableProps = {
   columns: Column[];
   rows: Row[];
-  isSortByServer?: boolean;
   onSort?: (column: string, sortType: SortType) => void;
   isFetching?: boolean;
+  isFirstColumnFixed?: boolean;
+  isLastColumnFixed?: boolean;
+  hover?: boolean;
 };
