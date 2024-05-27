@@ -1,16 +1,30 @@
 import { TableProps } from "./Table.types";
 
+export const MOCK_MASSIVE_DATA = {
+  columns: Array.from({ length: 30 }, (_, index) => ({
+    name: `column${index + 1}`,
+    title: `Column ${index + 1}`,
+  })),
+  rows: Array.from({ length: 30 }, (_, rowIndex) => ({
+    id: rowIndex + 1,
+    ...Object.fromEntries(
+      Array.from({ length: 30 }, (_, columnIndex) => [
+        `column${columnIndex + 1}`,
+        `column${columnIndex + 1}`,
+      ])
+    ),
+  })),
+};
+
 export const MOCK_DATA: TableProps = {
   columns: [
     {
       name: "lastName",
       title: "姓",
-      isSortable: true,
     },
     {
       name: "firstName",
       title: "名",
-      isSortable: true,
     },
     {
       name: "age",

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Table } from "./Table";
-import { MOCK_DATA } from "./Table.mocks";
+import { MOCK_MASSIVE_DATA, MOCK_DATA } from "./Table.mocks";
 import { useState } from "react";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -30,22 +30,18 @@ export const Default: Story = {
   },
 };
 
+export const Hover: Story = {
+  name: "Hover 特效",
+  args: {
+    ...MOCK_DATA,
+    hover: true,
+  },
+};
+
 export const Many: Story = {
   name: "多筆資料",
   args: {
-    columns: Array.from({ length: 30 }, (_, index) => ({
-      name: `column${index + 1}`,
-      title: `Column ${index + 1}`,
-    })),
-    rows: Array.from({ length: 30 }, (_, rowIndex) => ({
-      id: rowIndex + 1,
-      ...Object.fromEntries(
-        Array.from({ length: 30 }, (_, columnIndex) => [
-          `column${columnIndex + 1}`,
-          `column${columnIndex + 1}`,
-        ])
-      ),
-    })),
+    ...MOCK_MASSIVE_DATA,
   },
 };
 
@@ -60,7 +56,6 @@ export const SortByServer: Story = {
       <Table
         {...args}
         isFetching={isFetching}
-        isSortByServer
         onSort={() => {
           setIsFetching(true);
           setTimeout(() => {
@@ -69,5 +64,14 @@ export const SortByServer: Story = {
         }}
       />
     );
+  },
+};
+
+export const FixedColumns: Story = {
+  name: "固定欄位",
+  args: {
+    ...MOCK_MASSIVE_DATA,
+    isFirstColumnFixed: true,
+    isLastColumnFixed: true,
   },
 };
